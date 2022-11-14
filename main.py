@@ -74,9 +74,9 @@ def start_crawling():
 
         csv_writer.writerow([keyword])
 
-        try:
-            for ii in range(0, 2):
-                for i in range(1, 11):
+        for ii in range(0, 2):
+            for i in range(1, 11):
+                try:
                     result_tag_name = '#news-results > div:nth-child(' + str(i) + ')'
                     result_tag = driver.find_element(By.CSS_SELECTOR, result_tag_name + ' > div')
                     action.move_to_element(result_tag).perform()
@@ -92,13 +92,12 @@ def start_crawling():
                     link = content_element.get_attribute('href')
 
                     csv_writer.writerow([title, press, link])
-                next_btn = driver.find_element(By.CSS_SELECTOR,
-                                               '#news-results-tab > div.data-result-ac.pc-only.paging-v2-wrp.btm > div.data-result-btm > div > div > div > div > div:nth-child(7) > a')
-                action.move_to_element(next_btn).perform()
-                next_btn.click()
-        except Exception as e:
-            # print(e)
-            pass
+                except Exception as e:
+                    pass
+            next_btn = driver.find_element(By.CSS_SELECTOR,
+                                           '#news-results-tab > div.data-result-ac.pc-only.paging-v2-wrp.btm > div.data-result-btm > div > div > div > div > div:nth-child(7) > a')
+            action.move_to_element(next_btn).perform()
+            next_btn.click()
 
         step1_element = driver.find_element(By.CSS_SELECTOR, '#collapse-step-1')
         # action.move_to_element(step1_element).perform()
